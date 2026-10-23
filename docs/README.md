@@ -14,16 +14,78 @@ El videojuego contribuye a este propósito desde la educación, fomentando hábi
 
 ## 1. Diagrama de Casos de Uso General
 
-[PEGA AQUÍ EL CÓDIGO QUE COPIASTE DEL DIAGRAMA DE CASOS DE USO]
+```mermaid
+flowchart LR
+    N["Niño / Guardián del agua"]
+
+    subgraph S["La misión de las gotitas"]
+        A(["Iniciar juego"])
+        B(["Conocer la historia"])
+        C(["Elegir una misión"])
+        D(["Responder preguntas"])
+        E(["Ver si la respuesta es correcta"])
+        F(["Consultar progreso"])
+        G(["Salir del juego"])
+    end
+
+    N --- A
+    N --- B
+    N --- C
+    N --- D
+    N --- E
+    N --- F
+    N --- G
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> C
+```
 
 ### Explicación:
 Este diagrama muestra la interacción del jugador con el sistema: le permite iniciar el juego, elegir misiones y responder preguntas, mientras el sistema valida las respuestas y calcula su puntuación.
 
 ---
 
-## 2. Diagrama de Clases
+## 2. Diagrama de Clases 
 
-[PEGA AQUÍ EL CÓDIGO QUE COPIASTE DEL DIAGRAMA DE CLASES]
+```mermaid
+classDiagram
+    class Mision {
+        +String nombre
+        +String descripcion
+        +mostrarMision()
+    }
+
+    class Pregunta {
+        +String enunciado
+        +mostrarPregunta()
+        +verificarRespuesta()
+    }
+
+    class OpcionRespuesta {
+        +String texto
+        +Boolean esCorrecta
+    }
+
+    class Jugador {
+        +String nombre
+        +int puntos
+        +responderPregunta()
+        +sumarPuntos()
+    }
+
+    class Retroalimentacion {
+        +String mensaje
+        +mostrarMensaje()
+    }
+
+    Mision "1" --> "1..*" Pregunta : contiene
+    Pregunta "1" --> "2..*" OpcionRespuesta : presenta
+    Jugador --> Pregunta : responde
+    Pregunta --> Retroalimentacion : genera
+```
 
 ### Explicación:
 Muestra la estructura interna de clases del módulo, definiendo cómo la entidad `Mision` se compone de preguntas que el `Jugador` responde para recibir retroalimentación.
